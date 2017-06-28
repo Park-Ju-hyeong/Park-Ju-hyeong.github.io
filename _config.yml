@@ -16,7 +16,7 @@ github_url: https://github.com/Park-Ju-hyeong
 description: This is personnel website of Ju-Hyeong Park
 favicon: favicon.png # Image must be in assets/images
 
-url: https://github.com/Park-Ju-hyeong # the base hostname & protocol for your site
+url: http://Park-Ju-hyeong.github.io # the base hostname & protocol for your site
 
 ## Gem
 gems:
