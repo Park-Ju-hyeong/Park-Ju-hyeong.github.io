@@ -6,83 +6,55 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: 해보고 싶은 것 많을 나이
-name: J. H. Park
-email: juhy9212@gmail.com
-location: seoul, Republic of Korea
-company: Naver Blog
-company_url: http://blog.naver.com/juhy9212
-github_url: https://github.com/Park-Ju-hyeong
-description: This is personnel website of Ju-Hyeong Park
-favicon: favicon.png # Image must be in assets/images
+title: HyG
+brief-intro: Front-end Dev Engineer
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://park-ju-hyeong.github.io" # the base hostname & protocol for your site
 
-url: http://Park-Ju-hyeong.github.io # the base hostname & protocol for your site
+permalink: /:year/:month/:day/:title/
 
-## Gem
-gems:
-  - jekyll-paginate
-  - jekyll-geo-pattern
-  - rouge
-  - kramdown
-  - jekyll-github-metadata
+# other links
+twitter_username: park-ju-hyeong126
+facebook_username: park-ju-hyeong.water
+github_username:  park-ju-hyeong
+email: park-ju-hyeong126@126.com
+weibo_username: 3115521wh
+zhihu_username: park-ju-hyeong
+linkedIn_username: park-ju-hyeong
+dribbble_username:
+
+description_footer: 本站记录我前端之旅的沿途风景！
+
+# comments
+# two ways to comment, only choose one, and use your own short name
+# 两种评论插件，选一个就好了，使用自己的 short_name
+duoshuo_shortname: #hygblog
+disqus_shortname: park-ju-hyeong
+
+# statistic analysis 统计代码
+# 百度统计 id，将统计代码替换为自己的百度统计id，即
+# hm.src = "//hm.baidu.com/hm.js?xxxxxxxxxxxx";
+# xxxxx字符串
+baidu_tongji_id: cf8506e0ef223e57ff6239944e5d46a4
+google_analytics_id: UA-72449510-4 # google 分析追踪id
 
 # Build settings
 markdown: kramdown
-highlighter: rouge
-lsi:         false
-excerpt_separator: "\n\n"
-
-source:      .
-destination: ./_site
-
-quiet:    false
-defaults: []
 
 kramdown:
   input: GFM
-  enable_coderay: true
+  syntax_highlighter: rouge
 
-# Disque
-disque: http-park-ju-hyeong-github-io.disqus.com
+# port
+# port: 1234
 
-# Pagination
-paginate: 10
-paginate_path: 'page:num'
+# url
+category_dir: category/
+tag_dir: tag/
 
-# Navigation
-navs:
-  -
-    href: /
-    label: Home
+# excerpt
+excerpt_separator: "\n\n\n\n"
 
-  -
-    href: /open-source
-    label: Open-Source
-
-  -
-    href: /blog
-    label: Blog
-
-  -
-    href: /bookmark
-    label: Bookmark
-
-  -
-    href: /about
-    label: About
-
-# Sidebar to show popular repo
-side_bar_repo_limit: 5 # Number of repos to show
-
-# Google Analytics
-analytics :
-  provider : google
-  google :
-      tracking_id : 'UA-72165600-1'
-
-
-# For about.html. Fell free to create your own!
-skill_software_keywords: [Java, C, C++, Qt, Python, MySQL, Oracle, SQLite, PL/SQL, Design Patterns]
-skill_j2ee_keywords: [Spring, Struct, Hibernet, MyBatis, JSP]
-skill_web_keywords: [HTML, CSS, JS, JQuery, Ajax, AngularJS, NodeJS, ExpressJS, MongoDB, Redis, PHP, Symfony, Boostrap]
-skill_mobile_app_keywords: [Android, Sketch UI Desgin]
+# paginate
+gems: [jekyll-paginate]
+paginate: 6
