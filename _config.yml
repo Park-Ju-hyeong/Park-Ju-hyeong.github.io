@@ -14,16 +14,11 @@ url: "https://park-ju-hyeong.github.io" # the base hostname & protocol for your 
 permalink: /:year/:month/:day/:title/
 
 # other links
-twitter_username: park-ju-hyeong126
-facebook_username: park-ju-hyeong.water
 github_username:  park-ju-hyeong
-email: park-ju-hyeong126@126.com
-weibo_username: 3115521wh
-zhihu_username: park-ju-hyeong
-linkedIn_username: park-ju-hyeong
-dribbble_username:
+email: juhy9212@gmail.com
 
-description_footer: 本站记录我前端之旅的沿途风景！
+
+description_footer: 블로그 시작.
 
 # comments
 # two ways to comment, only choose one, and use your own short name
