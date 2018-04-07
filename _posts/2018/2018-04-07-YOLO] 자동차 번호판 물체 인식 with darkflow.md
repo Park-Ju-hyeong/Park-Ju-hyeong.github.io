@@ -3,7 +3,7 @@ layout: post
 title: "YOLO] 자동차 번호판 물체 인식 with darkflow"
 category: tensorflow
 tags: object-detection yolo darkflow tensorflow slim 자동차-번호판
-excerpt: # 제작중
+excerpt: 제작중
 mathjax: true
 author: J. H. Park
 sitemap :
