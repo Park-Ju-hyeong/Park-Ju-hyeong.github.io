@@ -3,7 +3,7 @@ layout: post
 title: "YOLO] 자동차 번호판 물체 인식 with darkflow"
 category: tensorflow
 tags: object-detection yolo darkflow tensorflow slim 자동차-번호판
-excerpt: 자동파 번호판 숫자를 인식해서 ocr 을 대체하는 방법 | 고속도로 하이패스도 이걸로 못바꿀까 ?
+excerpt: # 제작중
 mathjax: true
 author: J. H. Park
 sitemap :
@@ -15,6 +15,8 @@ sitemap :
 {:toc}
 
 # 제작중
+
+---
 
 물체인식 알고리즘중에서 yolo 를 이용한 방식을 정리합니다. (이론 x, 돌리는법 o)
 
