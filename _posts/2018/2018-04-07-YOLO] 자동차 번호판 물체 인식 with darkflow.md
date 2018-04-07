@@ -14,6 +14,8 @@ sitemap :
 * content
 {:toc}
 
+# 제작중
+
 물체인식 알고리즘중에서 yolo 를 이용한 방식을 정리합니다. (이론 x, 돌리는법 o)
 
 순서는
@@ -45,7 +47,7 @@ YOLO 와 비슷한 선상에 있는 알고리즘으로는 `Fast/Faster R-CNN` �
 real-time (예를 들어, gpu 1장 기준 초당 30장 이상 처리要 : `30fps` ) 을 해야하는 상황이면 YOLO 를 쓰면 되고  
 시간과 비용에 구애받지 않는다면, Faster R-CNN 을 쓰면 됩니다.  
 
-## [DATASET][DATASET]
+## [dataset][DATASET]
 
 ![이미지](https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_02.png?raw=true)
 
@@ -123,45 +125,6 @@ pip install .
 이제 터미널에서 `flow` 라는 명령어로 `yolo v1` 과 `yolo v2` 를 사용할 수  있습니다.  
 현재 공식적으로 `yolo v3`가 나온 상황이지만 darknet 에서만 지원되고 darkflow 에서는 사용할 수 없습니다. [Issues #665][665]   
 
-
-### flow --help : parameters
-
-```
-Example usage: flow --imgdir sample_img/ --model cfg/yolo.cfg --load bin/yolo.weights
-
-Arguments:
-  --help, --h, -h  show this super helpful message and exit
-  --imgdir         path to testing directory with images
-  --binary         path to .weights directory
-  --config         path to .cfg directory
-  --dataset        path to dataset directory
-  --labels         path to labels file
-  --backup         path to backup folder
-  --summary        path to TensorBoard summaries directory
-  --annotation     path to annotation directory
-  --threshold      detection threshold
-  --model          configuration of choice
-  --trainer        training algorithm
-  --momentum       applicable for rmsprop and momentum optimizers
-  --verbalise      say out loud while building graph
-  --train          train the whole net
-  --load           how to initialize the net? Either from .weights or a checkpoint, or even from scratch
-  --savepb         save net and weight to a .pb file
-  --gpu            how much gpu (from 0.0 to 1.0)
-  --gpuName        GPU device name
-  --lr             learning rate
-  --keep           Number of most recent training results to save
-  --batch          batch size
-  --epoch          number of epoch
-  --save           save checkpoint every ? training examples
-  --demo           demo on webcam
-  --queue          process demo in batch
-  --json           Outputs bounding box information in json format.
-  --saveVideo      Records video from input video or camera
-  --pbLoad         path to .pb protobuf file (metaLoad must also be specified)
-  --metaLoad       path to .meta file generated during --savepb that corresponds to .pb file
-```
-
 클론한 darkflow에는 이미 네트워크를 구성해 놓았는데,  
 
 | cfg | 설명 |
@@ -212,7 +175,7 @@ Arguments:
 사실 `coco` 나 `voc` 데이터 셋을 사용하는게 아니라 자신의 데이터 셋을 사용하는 것이라면,  
 2가지 정도 수정할 사항이 있다.  
 
-1. labels.txt 수정하기  
+### 1. labels.txt 수정하기  
 
 `./labels.txt`  을 위에서 `labelimg`에서 만들때 썼던 classes 이름으로 수정해 준다.  
 
@@ -230,7 +193,7 @@ Arguments:
 kr
 ```
 
-2. .cfg 수정하기  
+### 2. .cfg 수정하기  
 
 사용할 `yolo.cfg` 를 복사해서 다른이름으로 저장하고  
 (ex. car-yolo.cfg : 왜냐하면 그 이름 그대로 쓰면 안에 로직으로 인해 coco label로 인식해버린다. labels.txt 소용이 없어짐)  
@@ -259,28 +222,98 @@ jitter=.3
 rescore=1
 ```
 
+### flow --help : parameters
+
+```
+Example usage: flow --imgdir sample_img/ --model cfg/yolo.cfg --load bin/yolo.weights
+
+Arguments:
+  --help, --h, -h  show this super helpful message and exit
+  --imgdir         path to testing directory with images
+  --binary         path to .weights directory
+  --config         path to .cfg directory
+  --dataset        path to dataset directory
+  --labels         path to labels file
+  --backup         path to backup folder
+  --summary        path to TensorBoard summaries directory
+  --annotation     path to annotation directory
+  --threshold      detection threshold
+  --model          configuration of choice
+  --trainer        training algorithm
+  --momentum       applicable for rmsprop and momentum optimizers
+  --verbalise      say out loud while building graph
+  --train          train the whole net
+  --load           how to initialize the net? Either from .weights or a checkpoint, or even from scratch
+  --savepb         save net and weight to a .pb file
+  --gpu            how much gpu (from 0.0 to 1.0)
+  --gpuName        GPU device name
+  --lr             learning rate
+  --keep           Number of most recent training results to save
+  --batch          batch size
+  --epoch          number of epoch
+  --save           save checkpoint every ? training examples
+  --demo           demo on webcam
+  --queue          process demo in batch
+  --json           Outputs bounding box information in json format.
+  --saveVideo      Records video from input video or camera
+  --pbLoad         path to .pb protobuf file (metaLoad must also be specified)
+  --metaLoad       path to .meta file generated during --savepb that corresponds to .pb file
+```
+
+
 ### Training  
 
-`../data/dataset/ ` 경로에 바로 이미지를 넣고  
-`../data/annotations/ \` 경로에 바로 annotation : xml 데이터를 넣는다.  
-trainer 는 기본 `rmsprop` 이지만 `Adam`으로 바꿔줬다. - 개인취향  
-
-
+1. `../data/dataset/ ` 경로에 바로 이미지를 넣고  
+2. `../data/annotations/ \` 경로에 바로 annotation : xml 데이터를 넣습니다.  
+3. trainer 는 기본 `rmsprop` 이지만 `Adam`으로 바꿔줬다. - 개인취향  
+4. 그리고 학습할 때는 꼭 `--train` 을 해야 합니다.
+5. --load 는 맨 처음 학습할 때는 없애고, 재학습 할 때만 `-1` or `특정 epoch 숫자` 를 넣습니다.  
+  + .weights 파일을 보실 수 있는데 전혀 쓸일이 없습니다.  왜냐하면, coco 나 voc 데이터이기 때문입니다.  
+  + 우리는 ckpt 를 쓰거나 pb 로 저장해서 씁니다.    
+6. 나머지는  `parameters` 를 참조.  
 
 ```
 flow \
 --model ./cfg/car-yolo.cfg \
 --labels ./labels.txt \
 --trainer adam \
+--load -1 \
 --dataset ../data/dataset/ \
 --annotation ../data/annotations/ \
 --train \
 --summary ./logs \
---batch 3 \
---epoch 1000 \
---save 100 \
---lr 1e-03 \
+--batch 5 \
+--epoch 100 \
+--save 50 \
+--keep 5 \
+--lr 1e-04 \
 ```
+
+여기서 조금 특이한 점은 logs 로 summary 했는데 logstrain 에 저장됩니다.  
+logs는 빈 폴더가 됩니다.  
+
+```
+tensorboard --logdir=./logstrain
+```
+
+![이미지](https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_06.png?raw=true)  
+
+
+
+### detect  
+
+학습이 끝나면 detection 을 진행합니다.  
+`--dataset` 이 아니라 `--imgdir` 에 찾고싶은 데이터를 입력합니다.  
+그러면 test할 이미지 폴더 안에 `out` 폴더가 생기고 디텍션한 결과가 저장됩니다.  
+```
+flow \
+--imgdir ../data/dataset/ \
+--model ./cfg/car-yolo.cfg \
+--load -1 \
+--batch 1 \
+--threshold 0.5 \
+```  
+
 
 
 ## 마무리
