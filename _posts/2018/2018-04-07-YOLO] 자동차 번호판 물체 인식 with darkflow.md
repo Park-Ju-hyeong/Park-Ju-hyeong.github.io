@@ -261,7 +261,11 @@ rescore=1
 
 ### Training  
 
-`../data/dataset/ ` 경로에 바로 이미지를 넣고 `../data/annotations/ \` 경로에 바로 annotation : xml 데이터를 넣는다.
+`../data/dataset/ ` 경로에 바로 이미지를 넣고  
+`../data/annotations/ \` 경로에 바로 annotation : xml 데이터를 넣는다.  
+trainer 는 기본 `rmsprop` 이지만 `Adam`으로 바꿔줬다. - 개인취향  
+
+
 
 ```
 flow \
@@ -285,17 +289,10 @@ flow \
 
 
 
-[YOLO]:
-https://pjreddie.com/darknet/yolo/  
-[DATASET]:
-https://www.google.co.kr/search?q=%EC%9E%90%EB%8F%99%EC%B0%A8+%EB%B2%88%ED%98%B8%ED%8C%90&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjkz5u9iajaAhVJtpQKHfnVDe0Q_AUICigB&biw=1440&bih=900  
-[labelimg]:
-https://github.com/tzutalin/labelImg  
-[darkflow]:
-https://github.com/thtrieu/darkflow
-[dn]:
-https://pjreddie.com/darknet/
-[gnu]:
-https://github.com/thtrieu/darkflow/blob/master/LICENSE
-[665]:
-https://github.com/thtrieu/darkflow/issues/665
+[YOLO]:         https://pjreddie.com/darknet/yolo/  
+[DATASET]:      https://www.google.co.kr/search?q=%EC%9E%90%EB%8F%99%EC%B0%A8+%EB%B2%88%ED%98%B8%ED%8C%90&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjkz5u9iajaAhVJtpQKHfnVDe0Q_AUICigB&biw=1440&bih=900  
+[labelimg]:     https://github.com/tzutalin/labelImg  
+[darkflow]:     https://github.com/thtrieu/darkflow
+[dn]:           https://pjreddie.com/darknet/
+[gnu]:          https://github.com/thtrieu/darkflow/blob/master/LICENSE
+[665]:          https://github.com/thtrieu/darkflow/issues/665
