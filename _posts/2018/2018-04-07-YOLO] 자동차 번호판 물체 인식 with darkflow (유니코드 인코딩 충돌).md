@@ -327,8 +327,8 @@ YOLO 를 돌려보고 싶은 마음에 google 을 해봤지만 죄다 이론설�
 darkflow 깃헙 페이지를 가도 충분하지는 않다.  
 그래서 만들게 됐다.  
 
-[ipynb 파일](https://github.com/Park-Ju-hyeong/yolo_darkflow)
-[학습한 weight ckpt 파일 (dropbox)](https://www.dropbox.com/sh/sd4s98nwiz8cure/AABeVnhTBr2448BD8nUrbdhna?dl=0)
+* [github / ipynb 파일](https://github.com/Park-Ju-hyeong/yolo_darkflow)  
+* [weights ckpt 파일 (dropbox)](https://www.dropbox.com/sh/sd4s98nwiz8cure/AABeVnhTBr2448BD8nUrbdhna?dl=0)
 
 ## Reference  
 
