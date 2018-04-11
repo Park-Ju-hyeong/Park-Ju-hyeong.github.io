@@ -1,10 +1,11 @@
 ---
 layout: post
-title: "자동차 번호판 인식 with YOLO v2 | "
+title: "자동차 번호판 인식 (OCR) with YOLO v2"
 date: 2018-04-11 14:00:06
 category: tensorflow
 tags: object-detection yolo darkflow tensorflow slim 자동차-번호판
-excerpt: 자동차 번호판 숫자를 읽어들이는 object detection 을 합니다. "그래서 어떻게 돌리는데 ?" 가 중점적인 사항입니다.
+excerpt: 자동차 번호판 숫자를 읽어들이는 object detection 을 합니다.  
+"그래서 어떻게 돌리는데 ?" 가 중점적인 사항입니다.
 mathjax: true
 author: J. H. Park
 sitemap :
