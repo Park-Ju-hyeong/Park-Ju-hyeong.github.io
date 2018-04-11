@@ -334,12 +334,11 @@ darkflow 깃헙 페이지를 가도 충분하지는 않다.
 
 | name | url |
 |:--:|:--:|
-|[YOLO]| https://pjreddie.com/darknet/yolo/|
-|[labelimg]| https://github.com/tzutalin/labelImg|
-|[darkflow]| https://github.com/thtrieu/darkflow|
-|[darknet]| https://pjreddie.com/darknet/|
-|[issues/665]| https://github.com/thtrieu/darkflow/issues/665|
-
+|YOLO| https://pjreddie.com/darknet/yolo/|
+|labelimg| https://github.com/tzutalin/labelImg|
+|darkflow| https://github.com/thtrieu/darkflow|
+|darknet| https://pjreddie.com/darknet/|
+|issues/665| https://github.com/thtrieu/darkflow/issues/665|
 
 
 ---
