@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "YOLO] 자동차 번호판 물체 인식 with darkflow"
+title: "자동차 번호판 물체 인식 with YOLO"
 category: tensorflow
 tags: object-detection yolo darkflow tensorflow slim 자동차-번호판
 excerpt: 제작중
@@ -22,12 +22,12 @@ sitemap :
 
 순서는
 
-1. YOLO 소개
-2. dataset, 자동차 번호판
-3. annotation, label 만드는 작업
-4. darkflow, yolo for tensorflow
-5. training, 학습
-6. detection, test 하기
+1. YOLO 소개  
+2. dataset, 자동차 번호판   
+3. annotation, label 만드는 작업  
+4. darkflow, yolo for tensorflow  
+5. training, 학습  
+6. detection, test 하기  
 
 ## [You Only Look Once][YOLO]
 
@@ -35,7 +35,7 @@ YOLO, object detection - 물체인식
 찾으려는 물체를 찾아 `bounding box` 로 표시해주는 알고리즘 입니다.  
 아래 사진은 YOLO 를 설명하는 대표적인 개, 자전거를 인식한 결과입니다.   
 
-![이미지](https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_01.png?raw=true)  
+![이미지][이미지1]
 
 YOLO 와 비슷한 선상에 있는 알고리즘으로는 `Fast/Faster R-CNN` 과 `SSD` 가 있는데 이것들과의 차이점으로는 다음과 같은 특징이 있습니다.  
 
@@ -43,7 +43,7 @@ YOLO 와 비슷한 선상에 있는 알고리즘으로는 `Fast/Faster R-CNN` �
 |:--:|:--:|
 |`YOLO` > <br> `Fast/Faster R-CNN`, `SSD`| `Fast/Faster R-CNN`, `SSD` > <br> `YOLO` |  
 
-![이미지](https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_03.png?raw=true)  
+![이미지][이미지2]
 
 각자 필요에 맞게, 상황에 맞게 알고리즘을 가져다 쓰면 됩니다.  
 real-time (예를 들어, gpu 1장 기준 초당 30장 이상 처리要 : `30fps` ) 을 해야하는 상황이면 YOLO 를 쓰면 되고  
@@ -51,11 +51,11 @@ real-time (예를 들어, gpu 1장 기준 초당 30장 이상 처리要 : `30fps
 
 ## [dataset][DATASET]
 
-![이미지](https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_02.png?raw=true)
+![이미지][이미지3]
 
 이번 포스트를 위해서 자동차 번호판 인식을 진행해보려 하는데, google 에 `자동차 번호판` 을 검색해서 나온 사진들을 이용하였습니다.  (29장 구할 수 있었습니다.)  
 
-![이미지](https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_04.png?raw=true)
+![이미지][이미지4]
 
 자동차 번호판은 `[0-9]`숫자와 `[가-힣]`한글의 조합으로 구성되어있습니다.  
 이번 포스트에서 인식한 클레스는 숫자 10종류와 한글 1종류로 제한하겠습니다.  
@@ -101,7 +101,7 @@ python labelImg.py
 | `d`	| Next image |
 | `a`	| Previous image |  
 
-![이미지](https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_05.gif?raw=true)
+![이미지][이미지5]
 <S>인고의 시간</S>
 
 ## [darkflow][darkflow]
@@ -262,11 +262,10 @@ Arguments:
   --metaLoad       path to .meta file generated during --savepb that corresponds to .pb file
 ```
 
-
 ### Training  
 
-1. `../data/dataset/ ` 경로에 바로 이미지를 넣고  
-2. `../data/annotations/ \` 경로에 바로 annotation : xml 데이터를 넣습니다.  
+1. `../data/dataset/ ` 경로에 바로 이미지를 넣고 (.png, .jpg)
+2. `../data/annotations/ \` 경로에 바로 annotation 데이터를 넣습니다.  (.xml)
 3. trainer 는 기본 `rmsprop` 이지만 `Adam`으로 바꿔줬다. - 개인취향  
 4. 그리고 학습할 때는 꼭 `--train` 을 해야 합니다.
 5. --load 는 맨 처음 학습할 때는 없애고, 재학습 할 때만 `-1` or `특정 epoch 숫자` 를 넣습니다.  
@@ -298,15 +297,14 @@ logs는 빈 폴더가 됩니다.
 tensorboard --logdir=./logstrain
 ```
 
-![이미지](https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_06.png?raw=true)  
-
-
+![이미지][이미지6]
 
 ### detect  
 
 학습이 끝나면 detection 을 진행합니다.  
 `--dataset` 이 아니라 `--imgdir` 에 찾고싶은 데이터를 입력합니다.  
 그러면 test할 이미지 폴더 안에 `out` 폴더가 생기고 디텍션한 결과가 저장됩니다.  
+
 ```
 flow \
 --imgdir ../data/dataset/ \
@@ -316,11 +314,20 @@ flow \
 --threshold 0.5 \
 ```  
 
+학습 데이터도 29장밖에 없었고 분류할 classes가 11개나 되는 이러한 환경에서  
+포스트하기위해 적당히 돌린 결과는 다음과 같다.  
 
+|엉망|진창|
+|-|-|
+|![이미지][이미지7]|![이미지][이미지8]|
+|![이미지][이미지9]|![이미지][이미지10]|
+|![이미지][이미지11]|![이미지][이미지11]|
 
 ## 마무리
 
-
+YOLO 를 돌려보고 싶은 마음에 google 을 해봤지만 죄다 이론설명..  
+darkflow 깃헙 페이지를 가도 충분하지는 않다.  
+그래서 만들게 됐다.  
 
 
 
@@ -331,3 +338,18 @@ flow \
 [dn]:           https://pjreddie.com/darknet/
 [gnu]:          https://github.com/thtrieu/darkflow/blob/master/LICENSE
 [665]:          https://github.com/thtrieu/darkflow/issues/665
+
+
+[이미지1]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_01.png?raw=true  
+[이미지2]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_02.png?raw=true  
+[이미지3]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_03.png?raw=true  
+[이미지4]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_04.png?raw=true  
+[이미지5]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_05.gif?raw=true  
+[이미지6]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_06.png?raw=true  
+[이미지7]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_07.png?raw=true  
+[이미지8]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_08.png?raw=true  
+[이미지9]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_09.png?raw=true  
+[이미지10]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_10.png?raw=true  
+[이미지11]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_11.png?raw=true  
+
+
