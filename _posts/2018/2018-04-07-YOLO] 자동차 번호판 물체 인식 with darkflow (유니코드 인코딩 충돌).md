@@ -1,11 +1,10 @@
 ---
 layout: post
 title: "자동차 번호판 인식 (OCR) with YOLO v2"
-date: 2018-04-11 14:00:06
+date: 2018-04-11 14:41:06
 category: tensorflow
 tags: object-detection yolo darkflow tensorflow slim 자동차-번호판
-excerpt: 자동차 번호판 숫자를 읽어들이는 object detection 을 합니다.  
-"그래서 어떻게 돌리는데 ?" 가 중점적인 사항입니다.
+excerpt: 자동차 번호판 숫자를 읽어들이는 object detection 을 합니다. " 그래서 어떻게 돌리는데 ? " 가 중점적인 사항입니다.
 mathjax: true
 author: J. H. Park
 sitemap :
@@ -320,7 +319,7 @@ flow \
 |-|-|
 |![이미지][이미지7]|![이미지][이미지8]|
 |![이미지][이미지9]|![이미지][이미지10]|
-|![이미지][이미지11]|![이미지][이미지11]|
+|![이미지][이미지11]|![이미지][이미지12]|
 
 ## 마무리
 
@@ -350,5 +349,5 @@ darkflow 깃헙 페이지를 가도 충분하지는 않다.
 [이미지9]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_04_images/20180407_09.png?raw=true  
 [이미지10]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_04_images/20180407_10.png?raw=true  
 [이미지11]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_04_images/20180407_11.png?raw=true  
-
+[이미지12]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_04_images/20180407_12.png?raw=true  
 
