@@ -327,7 +327,22 @@ YOLO 를 돌려보고 싶은 마음에 google 을 해봤지만 죄다 이론설�
 darkflow 깃헙 페이지를 가도 충분하지는 않다.  
 그래서 만들게 됐다.  
 
+[Park-Ju-hyeong/yolo_darkflow](https://github.com/Park-Ju-hyeong/yolo_darkflow)
 
+## Reference  
+
+| name | url |
+|:--:|:--:|
+|[YOLO]| https://pjreddie.com/darknet/yolo/|
+|[dataset]| https://www.google.co.kr/search?q=%EC%9E%90%EB%8F%99%EC%B0%A8|+%EB%B2%88%ED%98%B8%ED%8C%90&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjkz5u9iajaAhVJtpQKHfnVDe0Q_AUICigB&biw=1440&bih=900|
+|[labelimg]| https://github.com/tzutalin/labelImg|
+|[darkflow]| https://github.com/thtrieu/darkflow|
+|[darknet]| https://pjreddie.com/darknet/|
+|[issues/665]| https://github.com/thtrieu/darkflow/issues/665|
+
+
+
+---
 
 [YOLO]:         https://pjreddie.com/darknet/yolo/  
 [DATASET]:      https://www.google.co.kr/search?q=%EC%9E%90%EB%8F%99%EC%B0%A8+%EB%B2%88%ED%98%B8%ED%8C%90&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjkz5u9iajaAhVJtpQKHfnVDe0Q_AUICigB&biw=1440&bih=900  
