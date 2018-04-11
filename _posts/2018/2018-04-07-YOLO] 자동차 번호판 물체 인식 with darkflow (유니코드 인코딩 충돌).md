@@ -339,16 +339,16 @@ darkflow 깃헙 페이지를 가도 충분하지는 않다.
 [665]:          https://github.com/thtrieu/darkflow/issues/665
 
 
-[이미지1]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_01.png?raw=true  
-[이미지2]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_02.png?raw=true  
-[이미지3]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_03.png?raw=true  
-[이미지4]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_04.png?raw=true  
-[이미지5]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_05.gif?raw=true  
-[이미지6]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_06.png?raw=true  
-[이미지7]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_07.png?raw=true  
-[이미지8]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_08.png?raw=true  
-[이미지9]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_09.png?raw=true  
-[이미지10]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_10.png?raw=true  
-[이미지11]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_images/20180407_11.png?raw=true  
+[이미지1]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_04_images/20180407_01.png?raw=true  
+[이미지2]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_04_images/20180407_02.png?raw=true  
+[이미지3]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_04_images/20180407_03.png?raw=true  
+[이미지4]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_04_images/20180407_04.png?raw=true  
+[이미지5]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_04_images/20180407_05.gif?raw=true  
+[이미지6]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_04_images/20180407_06.png?raw=true  
+[이미지7]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_04_images/20180407_07.png?raw=true  
+[이미지8]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_04_images/20180407_08.png?raw=true  
+[이미지9]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_04_images/20180407_09.png?raw=true  
+[이미지10]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_04_images/20180407_10.png?raw=true  
+[이미지11]:        https://github.com/Park-Ju-hyeong/Park-Ju-hyeong.github.io/blob/master/_posts/2018_04_images/20180407_11.png?raw=true  
 
 
