@@ -199,7 +199,7 @@ kr
 (ex. car-yolo.cfg : 왜냐하면 그 이름 그대로 쓰면 안에 로직으로 인해 coco label로 인식해버린다. labels.txt 소용이 없어짐)  
 
   + `[region]` classes 를 11로 바꾼다.
-  + 그 위 `[convolutional]` filters 값을 (anchors + classes) * num 로 바꿔준다. 여기서는 `(5 + 11) * 5 = 80`  
+  + 그 위 `[convolutional]` filters 값을 (num + classes) * 5 로 바꿔준다. 여기서는 `(5 + 11) * 5 = 80`  
     - anchors 는 2개가 1세트이다. 즉 10개 아니다. 표현방법이 이상할 뿐...
 
 ```
