@@ -1,0 +1,806 @@
+
+---
+layout: post
+title: "[크레온 CREON API] 일별 데이터 수집"
+category: md
+tags: 크레온 creon api stock python
+excerpt: 대신증권 크레온 api 를 통해서 일별 데이터를 수집합니다.
+mathjax: true
+author: J. H. Park
+---
+
+```python
+import win32com.client
+import pandas as pd
+```
+
+
+```python
+class CREON(object):
+    """대신증권 크레온 API"""
+    
+    def __init__(self):
+        # 연결 여부 체크
+        self.objCpCybos = win32com.client.Dispatch("CpUtil.CpCybos")
+        bConnect = self.objCpCybos.IsConnect
+        if (bConnect == 0):
+            print("PLUS가 정상적으로 연결되지 않음. ")
+            exit()
+            
+    def SetCode(self, code):
+        # 일자별 object 구하기
+        self.objStockWeek = win32com.client.Dispatch("DsCbo1.StockWeek")
+        self.objStockWeek.SetInputValue(0, code)
+            
+
+    def ReqeustData(self):
+        # 데이터 요청
+        self.objStockWeek.BlockRequest()
+
+        # 통신 결과 확인
+        rqStatus = self.objStockWeek.GetDibStatus()
+        rqRet = self.objStockWeek.GetDibMsg1()
+        
+        if rqStatus != 0: 
+            return False
+        else:
+            print("통신상태 양호, 누적 개수 {}".format(len(self.data["date"])))
+
+        # 일자별 정보 데이터 처리
+        count = self.objStockWeek.GetHeaderValue(1)  # 데이터 개수
+        
+        
+        for i in range(count):
+            
+            self.data["date"].append(self.objStockWeek.GetDataValue(0, i))
+            self.data["open"].append(self.objStockWeek.GetDataValue(1, i))
+            self.data["high"].append(self.objStockWeek.GetDataValue(2, i))
+            self.data["low"].append(self.objStockWeek.GetDataValue(3, i))
+            self.data["close"].append(self.objStockWeek.GetDataValue(4, i))
+            self.data["diff"].append(self.objStockWeek.GetDataValue(5, i))
+            self.data["vol"].append(self.objStockWeek.GetDataValue(6, i))
+
+        return True
+    
+    
+    def GetStockPriceDay(self, from_yyyymmdd=None, to_yyyymmdd=None, count=None):
+        
+        assert from_yyyymmdd or to_yyyymmdd or count, print("기간을 입력해 주세요.")
+        
+        if to_yyyymmdd: 
+            to_yyyymmdd = int(to_yyyymmdd)
+        if from_yyyymmdd:
+            from_yyyymmdd = int(from_yyyymmdd)
+        if from_yyyymmdd and to_yyyymmdd:
+            if to_yyyymmdd > from_yyyymmdd:
+                t1, t2 = to_yyyymmdd, from_yyyymmdd
+                to_yyyymmdd = t2
+                from_yyyymmdd = t1
+                
+        if count: 
+            count = int(count)
+        else:
+            assert to_yyyymmdd, print("마지막 날짜를 입력해 주세요.")
+
+            
+        self.data = {
+            "date": [],
+            "open": [],
+            "high": [],
+            "low": [],
+            "close": [],
+            "diff": [],
+            "vol": [],
+        }
+        
+        _ = self.ReqeustData()
+        
+        while self.objStockWeek.Continue:
+            _ = self.ReqeustData()
+            
+            if count:
+                if len(self.data["date"]) > count:
+                    for k, v in self.data.items():
+                        self.data[k] = self.data[k][:count]
+                        
+                    break
+                        
+            else:
+                lastday = self.data["date"][-1]
+                
+                if to_yyyymmdd > lastday:
+                    endday = [i > to_yyyymmdd for i in self.data["date"]].index(False)
+                    
+                    if from_yyyymmdd:
+                        from_yyyymmdd = int(from_yyyymmdd)
+                        if from_yyyymmdd in self.data["date"]:
+                            startday = self.data["date"].index(from_yyyymmdd)
+                    else:
+                        startday = 0
+
+                    for k, v in self.data.items():
+                        self.data[k] = self.data[k][startday:endday]
+
+                    break
+                        
+                    
+        return self.data
+```
+
+
+```python
+creon = CREON()
+```
+
+
+```python
+creon.SetCode("A005930")
+```
+
+
+```python
+samsung = creon.GetStockPriceDay(to_yyyymmdd=20180101)
+```
+
+    통신상태 양호, 누적 개수 0
+    통신상태 양호, 누적 개수 36
+    통신상태 양호, 누적 개수 72
+    통신상태 양호, 누적 개수 108
+    통신상태 양호, 누적 개수 144
+    통신상태 양호, 누적 개수 180
+    통신상태 양호, 누적 개수 216
+    통신상태 양호, 누적 개수 252
+    
+
+
+```python
+pd.DataFrame(samsung)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>open</th>
+      <th>high</th>
+      <th>low</th>
+      <th>close</th>
+      <th>diff</th>
+      <th>vol</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>20190306</td>
+      <td>44000</td>
+      <td>44300</td>
+      <td>43700</td>
+      <td>43900</td>
+      <td>-350</td>
+      <td>7027119</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20190305</td>
+      <td>44600</td>
+      <td>45100</td>
+      <td>44150</td>
+      <td>44250</td>
+      <td>-600</td>
+      <td>10612405</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>20190304</td>
+      <td>46000</td>
+      <td>46100</td>
+      <td>44800</td>
+      <td>44850</td>
+      <td>-250</td>
+      <td>12926539</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>20190228</td>
+      <td>46400</td>
+      <td>46500</td>
+      <td>45100</td>
+      <td>45100</td>
+      <td>-1650</td>
+      <td>23569321</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>20190227</td>
+      <td>47000</td>
+      <td>47250</td>
+      <td>46750</td>
+      <td>46750</td>
+      <td>0</td>
+      <td>8045211</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>20190226</td>
+      <td>47350</td>
+      <td>47450</td>
+      <td>46500</td>
+      <td>46750</td>
+      <td>-600</td>
+      <td>7985547</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>20190225</td>
+      <td>47400</td>
+      <td>47550</td>
+      <td>47050</td>
+      <td>47350</td>
+      <td>200</td>
+      <td>7484716</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>20190222</td>
+      <td>46500</td>
+      <td>47150</td>
+      <td>46450</td>
+      <td>47150</td>
+      <td>200</td>
+      <td>6895772</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>20190221</td>
+      <td>46500</td>
+      <td>47200</td>
+      <td>46200</td>
+      <td>46950</td>
+      <td>50</td>
+      <td>8694009</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>20190220</td>
+      <td>46750</td>
+      <td>47100</td>
+      <td>46500</td>
+      <td>46900</td>
+      <td>950</td>
+      <td>11506720</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>20190219</td>
+      <td>45850</td>
+      <td>46150</td>
+      <td>45450</td>
+      <td>45950</td>
+      <td>-250</td>
+      <td>6741395</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>20190218</td>
+      <td>46500</td>
+      <td>46850</td>
+      <td>45850</td>
+      <td>46200</td>
+      <td>150</td>
+      <td>8183728</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>20190215</td>
+      <td>46750</td>
+      <td>46850</td>
+      <td>45650</td>
+      <td>46050</td>
+      <td>-1450</td>
+      <td>10554643</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>20190214</td>
+      <td>46600</td>
+      <td>47500</td>
+      <td>46150</td>
+      <td>47500</td>
+      <td>1300</td>
+      <td>17259341</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>20190213</td>
+      <td>46400</td>
+      <td>46700</td>
+      <td>46000</td>
+      <td>46200</td>
+      <td>150</td>
+      <td>11299738</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>20190212</td>
+      <td>44650</td>
+      <td>46250</td>
+      <td>44650</td>
+      <td>46050</td>
+      <td>1050</td>
+      <td>13184367</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>20190211</td>
+      <td>44500</td>
+      <td>45000</td>
+      <td>44250</td>
+      <td>45000</td>
+      <td>200</td>
+      <td>11125044</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>20190208</td>
+      <td>45700</td>
+      <td>45700</td>
+      <td>44650</td>
+      <td>44800</td>
+      <td>-1400</td>
+      <td>12689196</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>20190207</td>
+      <td>46800</td>
+      <td>47100</td>
+      <td>46200</td>
+      <td>46200</td>
+      <td>-150</td>
+      <td>15872001</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>20190201</td>
+      <td>46650</td>
+      <td>46950</td>
+      <td>46250</td>
+      <td>46350</td>
+      <td>200</td>
+      <td>13832454</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>20190131</td>
+      <td>46650</td>
+      <td>47050</td>
+      <td>46150</td>
+      <td>46150</td>
+      <td>-250</td>
+      <td>21621145</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>20190130</td>
+      <td>44800</td>
+      <td>46400</td>
+      <td>44800</td>
+      <td>46400</td>
+      <td>900</td>
+      <td>17505980</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>20190129</td>
+      <td>45050</td>
+      <td>45500</td>
+      <td>44350</td>
+      <td>45500</td>
+      <td>450</td>
+      <td>16215017</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>20190128</td>
+      <td>45000</td>
+      <td>45500</td>
+      <td>44600</td>
+      <td>45050</td>
+      <td>300</td>
+      <td>17998914</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>20190125</td>
+      <td>44300</td>
+      <td>44750</td>
+      <td>43750</td>
+      <td>44750</td>
+      <td>1700</td>
+      <td>22789395</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>20190124</td>
+      <td>43050</td>
+      <td>43100</td>
+      <td>42350</td>
+      <td>43050</td>
+      <td>1050</td>
+      <td>14747623</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>20190123</td>
+      <td>41350</td>
+      <td>42250</td>
+      <td>41350</td>
+      <td>42000</td>
+      <td>-150</td>
+      <td>11071079</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>20190122</td>
+      <td>42750</td>
+      <td>42850</td>
+      <td>41850</td>
+      <td>42150</td>
+      <td>-600</td>
+      <td>9964356</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>20190121</td>
+      <td>42700</td>
+      <td>42750</td>
+      <td>41900</td>
+      <td>42750</td>
+      <td>450</td>
+      <td>11355701</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>20190118</td>
+      <td>42000</td>
+      <td>42400</td>
+      <td>41950</td>
+      <td>42300</td>
+      <td>350</td>
+      <td>11029256</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>256</th>
+      <td>20180212</td>
+      <td>45100</td>
+      <td>46320</td>
+      <td>45040</td>
+      <td>45720</td>
+      <td>1020</td>
+      <td>15754950</td>
+    </tr>
+    <tr>
+      <th>257</th>
+      <td>20180209</td>
+      <td>44440</td>
+      <td>45180</td>
+      <td>44420</td>
+      <td>44700</td>
+      <td>-1300</td>
+      <td>17465000</td>
+    </tr>
+    <tr>
+      <th>258</th>
+      <td>20180208</td>
+      <td>46120</td>
+      <td>46620</td>
+      <td>45980</td>
+      <td>46000</td>
+      <td>200</td>
+      <td>23251050</td>
+    </tr>
+    <tr>
+      <th>259</th>
+      <td>20180207</td>
+      <td>48240</td>
+      <td>48260</td>
+      <td>45800</td>
+      <td>45800</td>
+      <td>-1620</td>
+      <td>23448050</td>
+    </tr>
+    <tr>
+      <th>260</th>
+      <td>20180206</td>
+      <td>46600</td>
+      <td>47920</td>
+      <td>46580</td>
+      <td>47420</td>
+      <td>-500</td>
+      <td>19406450</td>
+    </tr>
+    <tr>
+      <th>261</th>
+      <td>20180205</td>
+      <td>46500</td>
+      <td>48320</td>
+      <td>46000</td>
+      <td>47920</td>
+      <td>220</td>
+      <td>28357900</td>
+    </tr>
+    <tr>
+      <th>262</th>
+      <td>20180202</td>
+      <td>49380</td>
+      <td>49400</td>
+      <td>47700</td>
+      <td>47700</td>
+      <td>-2120</td>
+      <td>29260350</td>
+    </tr>
+    <tr>
+      <th>263</th>
+      <td>20180201</td>
+      <td>50620</td>
+      <td>50960</td>
+      <td>49720</td>
+      <td>49820</td>
+      <td>-80</td>
+      <td>27609450</td>
+    </tr>
+    <tr>
+      <th>264</th>
+      <td>20180131</td>
+      <td>50020</td>
+      <td>54140</td>
+      <td>49600</td>
+      <td>49900</td>
+      <td>100</td>
+      <td>64681300</td>
+    </tr>
+    <tr>
+      <th>265</th>
+      <td>20180130</td>
+      <td>50440</td>
+      <td>50640</td>
+      <td>49780</td>
+      <td>49800</td>
+      <td>-1420</td>
+      <td>12284550</td>
+    </tr>
+    <tr>
+      <th>266</th>
+      <td>20180129</td>
+      <td>51200</td>
+      <td>51480</td>
+      <td>50900</td>
+      <td>51220</td>
+      <td>440</td>
+      <td>11838800</td>
+    </tr>
+    <tr>
+      <th>267</th>
+      <td>20180126</td>
+      <td>50500</td>
+      <td>50780</td>
+      <td>49840</td>
+      <td>50780</td>
+      <td>520</td>
+      <td>10350100</td>
+    </tr>
+    <tr>
+      <th>268</th>
+      <td>20180125</td>
+      <td>49220</td>
+      <td>50360</td>
+      <td>49160</td>
+      <td>50260</td>
+      <td>920</td>
+      <td>11160350</td>
+    </tr>
+    <tr>
+      <th>269</th>
+      <td>20180124</td>
+      <td>48860</td>
+      <td>49700</td>
+      <td>48560</td>
+      <td>49340</td>
+      <td>180</td>
+      <td>9550500</td>
+    </tr>
+    <tr>
+      <th>270</th>
+      <td>20180123</td>
+      <td>48660</td>
+      <td>49160</td>
+      <td>48300</td>
+      <td>49160</td>
+      <td>920</td>
+      <td>13532700</td>
+    </tr>
+    <tr>
+      <th>271</th>
+      <td>20180122</td>
+      <td>48640</td>
+      <td>48680</td>
+      <td>47960</td>
+      <td>48240</td>
+      <td>-1080</td>
+      <td>12520900</td>
+    </tr>
+    <tr>
+      <th>272</th>
+      <td>20180119</td>
+      <td>50380</td>
+      <td>50380</td>
+      <td>49040</td>
+      <td>49320</td>
+      <td>-580</td>
+      <td>9219950</td>
+    </tr>
+    <tr>
+      <th>273</th>
+      <td>20180118</td>
+      <td>50020</td>
+      <td>50640</td>
+      <td>49820</td>
+      <td>49900</td>
+      <td>280</td>
+      <td>14848850</td>
+    </tr>
+    <tr>
+      <th>274</th>
+      <td>20180117</td>
+      <td>50020</td>
+      <td>50020</td>
+      <td>49060</td>
+      <td>49620</td>
+      <td>-380</td>
+      <td>11053050</td>
+    </tr>
+    <tr>
+      <th>275</th>
+      <td>20180116</td>
+      <td>48760</td>
+      <td>50140</td>
+      <td>48620</td>
+      <td>50000</td>
+      <td>1460</td>
+      <td>20389650</td>
+    </tr>
+    <tr>
+      <th>276</th>
+      <td>20180115</td>
+      <td>48800</td>
+      <td>48980</td>
+      <td>47920</td>
+      <td>48540</td>
+      <td>340</td>
+      <td>10096000</td>
+    </tr>
+    <tr>
+      <th>277</th>
+      <td>20180112</td>
+      <td>48240</td>
+      <td>48480</td>
+      <td>46760</td>
+      <td>48200</td>
+      <td>-40</td>
+      <td>27270450</td>
+    </tr>
+    <tr>
+      <th>278</th>
+      <td>20180111</td>
+      <td>48200</td>
+      <td>49260</td>
+      <td>48020</td>
+      <td>48240</td>
+      <td>-600</td>
+      <td>25123800</td>
+    </tr>
+    <tr>
+      <th>279</th>
+      <td>20180110</td>
+      <td>50500</td>
+      <td>50520</td>
+      <td>48640</td>
+      <td>48840</td>
+      <td>-1560</td>
+      <td>18566800</td>
+    </tr>
+    <tr>
+      <th>280</th>
+      <td>20180109</td>
+      <td>51460</td>
+      <td>51720</td>
+      <td>49980</td>
+      <td>50400</td>
+      <td>-1620</td>
+      <td>18013600</td>
+    </tr>
+    <tr>
+      <th>281</th>
+      <td>20180108</td>
+      <td>52400</td>
+      <td>52520</td>
+      <td>51500</td>
+      <td>52020</td>
+      <td>-100</td>
+      <td>8383650</td>
+    </tr>
+    <tr>
+      <th>282</th>
+      <td>20180105</td>
+      <td>51300</td>
+      <td>52120</td>
+      <td>51200</td>
+      <td>52120</td>
+      <td>1040</td>
+      <td>9481150</td>
+    </tr>
+    <tr>
+      <th>283</th>
+      <td>20180104</td>
+      <td>52120</td>
+      <td>52180</td>
+      <td>50640</td>
+      <td>51080</td>
+      <td>-540</td>
+      <td>11695450</td>
+    </tr>
+    <tr>
+      <th>284</th>
+      <td>20180103</td>
+      <td>52540</td>
+      <td>52560</td>
+      <td>51420</td>
+      <td>51620</td>
+      <td>600</td>
+      <td>10013500</td>
+    </tr>
+    <tr>
+      <th>285</th>
+      <td>20180102</td>
+      <td>51380</td>
+      <td>51400</td>
+      <td>50780</td>
+      <td>51020</td>
+      <td>60</td>
+      <td>8474250</td>
+    </tr>
+  </tbody>
+</table>
+<p>286 rows × 7 columns</p>
+</div>
+
+
