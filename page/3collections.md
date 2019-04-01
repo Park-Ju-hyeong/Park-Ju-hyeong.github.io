@@ -9,11 +9,10 @@ type: page
 * content
 {:toc}
 
-## 북마크 
+## Youtube
 
-* [Google](https://www.google.co.kr)
-
-    구글 사이트
+* [[투자상품] 양매도ETN을 파헤쳤더니 보물이 나왔다](https://youtu.be/UTSrTaWnlfc)  
+    > `TRUE 코스피 양매도 5% OTM ETN` 에 대한 설명
 
     
 
