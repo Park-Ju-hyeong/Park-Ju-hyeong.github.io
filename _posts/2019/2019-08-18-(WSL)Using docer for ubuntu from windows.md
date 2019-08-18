@@ -54,7 +54,9 @@ MS store에서 ubuntu 설치 후 바로 실행했을 때 문제없이 linux 계�
 
 
 ```cmd
+
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+
 ```
 
 ## 3. ubuntu 에서 docker 설치 
