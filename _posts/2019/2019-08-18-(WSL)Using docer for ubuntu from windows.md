@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Get tasklist from python and windows"
-category: python
-tags: os python windows
-excerpt: 파이썬에서 tasklist 를 불러옵니다.
+title: "Using docer for ubuntu from windows"
+category: windows
+tags: windows ubuntu docker
+excerpt: 윈도우즈 안에있는 우분투에서 도커를 사용하는 방법.
 mathjax: true
 author: J. H. Park
 sitemap :
@@ -14,50 +14,45 @@ sitemap :
 * content
 {:toc}
 
-# 파이썬에서 프로세스 리스트 가져오기
-
-cmd 에서 `tasklist` 명령어를 치면 현재 프로레스 리스트를 확인할 수 있습니다.  
-
-`os.system` 으로 실행하면 텍스트 형태로 가져올 수 없습니다. 
-
-`subprocess.call` 도 마찬가지로 특정 명령문을 실행시킬 때만 사용할 수 있습니다.
-
-`subprocess.check_output` 함수를 이용해서 리턴 결과를 가져올 수 있습니다.
+# 윈도우즈 안에있는 우분투에서 도커를 사용하는 방법  
+  
+2년 전만 해도 windows 에서 docker 를 사용하려면, `docker for windows` 라는 프로그램을 통해서 진행했었다.  
+현재 많이 사용하는 방법은 WSL 이라는 건데 윈도우에서 ubuntu를 사용할 수 있게 해주는 기능이 있다. (MS 에서 ubuntu 개발진과 공동으로 개발한 기능이라고 한다.)  
 
 
-# TASKLSIT
 
-```python  
-import subprocess
-import re    
 
-def get_processes_running():
-    tasks = subprocess.check_output(['tasklist']).decode('cp949', 'ignore').split("\r\n")
-    p = []
-    for task in tasks:
-        m = re.match("(.+?) +(\d+) (.+?) +(\d+) +(\d+.* K).*",task)
-        if m is not None:
-            p.append({"image":m.group(1),
-                        "pid":m.group(2),
-                        "session_name":m.group(3),
-                        "session_num":m.group(4),
-                        "mem_usage":m.group(5)
-                        })
-    return p
+
+# WSL (Windows Subsystem for Linux)
+
+## Requirement
+
+
+
+# 설치 방법
+
+## 1. MS sotre 에서 ubuntu 설치
+
+MS store 에서 ubuntu 를 검색한다. 각자 자신이 사용할 버전으로 설치하면 된다.  
+필자는 사용하는 프로그램들이 아직 18.04에 최적화가 안돼있는 것 같아 16.04 를 설치하였다.  
+
+![](C:/Users/jpark/Documents/GitHub/Park-Ju-hyeong.github.io/_posts/2019_08_images/ms_sotre_ubuntu.PNG)
+
+
+## 2. Windows 기능 켜기  
+
+MS store에서 ubuntu 설치 후 바로 실행했을 때 문제없이 linux 계정설정으로 넘어가면 이번 단계를 넘어가면 된다.  
+하지만 __`0x8007019e`__ 같은 에러가 난다면, cmd 나 powershell 을 키고 아래와 같이 명령어를 날린다.  
+
+
+```cmd
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 ```
-```
-[
-	{'image': 'System Idle Process',
-	'pid': '0',
-  	'session_name': 'Services',
- 	 'session_num': '0',
-  	'mem_usage': '8 K'},
-  	.
-  	.
-  	.
-]
-```
+
+`C:\Users\<Username>\AppData\Local\Microsoft\WindowsApps`
 
 # Reference
 
-1. https://stackoverflow.com/questions/13525882/tasklist-output
+1. https://docs.microsoft.com/ko-kr/windows/wsl/install-win10
+1. https://medium.com/rkttu/wsl%EC%97%90%EC%84%9C-native-docker-%EC%8B%A4%ED%96%89%ED%95%98%EA%B8%B0-ff75b1627a87  
+1. https://www.clien.net/service/board/cm_nas/12671058  
