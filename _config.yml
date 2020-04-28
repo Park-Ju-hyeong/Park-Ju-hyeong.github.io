@@ -6,13 +6,13 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: Ashwathama
+title: Ju-ing
 description: > # this means to ignore newlines until "baseurl:"
  Ashwathama is a minimal website with an app like design. It also features card layouts for website elements.
-baseurl: "/ashwath" # the subpath of your site, e.g. /blog
-url: "http://webjeda.com/ashwath/"
+baseurl: "/" # the subpath of your site, e.g. /blog
+url: "Park-Ju-hyeong.github.io"
 permalink: :title/
-full-url: "http://webjeda.com/ashwathama/" # the base hostname & protocol for your site
+full-url: "https://Park-Ju-hyeong.github.io/" # the base hostname & protocol for your site
 
 
 # CSS
@@ -31,7 +31,7 @@ analytics: UA-83979019-1
 simpleform-token: b6d4be9b039b666b3311e1ddcbfb577c
 
 # Redirect users after submitting the form
-redirect-to: http://blog.webjeda.com/thank-you/
+redirect-to: http://blog.ju-ing.com
 
 # Site version
 version: 0.9
