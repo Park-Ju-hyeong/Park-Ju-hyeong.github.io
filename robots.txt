@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: http://park-ju-hyeong.github.io/sitemap.xml
